@@ -4,6 +4,7 @@ const numberButtons = document.querySelectorAll(".button.number");
 const operatorButtons = document.querySelectorAll(".button.operator");
 const equalButton = document.querySelector(".button#equal");
 const clearButton = document.querySelector(".bigButton#clearButton");
+const deleteButton = document.querySelector(".bigButton#deleteButton");
 
 let number1;
 let number2;
@@ -14,6 +15,7 @@ numberButtons.forEach((button) => button.addEventListener('click', () => appendN
 operatorButtons.forEach((button) => button.addEventListener('click', () => setOperation(button.textContent)));
 equalButton.addEventListener('click', evaluate);
 clearButton.addEventListener('click', clearDisplay);
+deleteButton.addEventListener('click', deleteNumber);
 
 function operate(number1, number2, currentOperation) {
     number1 = parseInt(number1);
@@ -60,4 +62,8 @@ function appendNumber(number) {
         shouldResetScreen = false;
     } 
     currentDisplay.textContent += number;
+}
+
+function deleteNumber() {
+    currentDisplay.textContent = currentDisplay.textContent.slice(0, currentDisplay.textContent.length - 1);
 }
