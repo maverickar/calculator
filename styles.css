@@ -8,17 +8,17 @@ body {
     display: flex;
     flex-direction: column; 
     align-items: center;
-    height: 1000px;
+    height: 1070px;
     width: 700px;
     background-color: lightslategray;
     border-radius: 25px;
-    margin: 30px;
+    margin: 80px;
     border: 3px solid black;
 }
 
 .display {
     height: 200px;
-    width: 600px;
+    width: 500px;
     background-color: lightblue;
     margin: 40px;
     border: 3px solid black;
@@ -41,7 +41,7 @@ body {
 
 .bigButtons {
     width: 600px;
-    margin: 20px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-evenly;
 }
@@ -49,9 +49,10 @@ body {
 .buttonGrid {
     display: grid;
     width: 600px;
-    height: 800px;
+    height: 550px;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(4, 1fr);
+    row-gap: 20px;
     justify-items: center;
     align-items: center;
     margin-bottom: 40px;

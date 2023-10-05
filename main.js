@@ -7,27 +7,20 @@ const clearButton = document.querySelector(".bigButton#clearButton");
 
 let number1;
 let number2;
-let operator;
-let result = 0;
+let currentOperation = null;
+let shouldResetScreen = false;
 
-numberButtons.forEach((button) => {
-    button.addEventListener('click', storeFirstValue);
-    button.addEventListener('click', updateCurrentDisplay);
-});
-
-operatorButtons.forEach((button) => {
-    button.addEventListener('click', getOperator);
-    button.addEventListener('click', updateStorageDisplay);
-});
-
-equalButton.addEventListener('click', operate);
+numberButtons.forEach((button) => button.addEventListener('click', () => appendNumber(button.textContent)));
+operatorButtons.forEach((button) => button.addEventListener('click', () => setOperation(button.textContent)));
+equalButton.addEventListener('click', evaluate);
 clearButton.addEventListener('click', clearDisplay);
 
-function operate() {
-    switch(operator) {
+function operate(number1, number2, currentOperation) {
+    number1 = parseInt(number1);
+    number2 = parseInt(number2);
+    switch(currentOperation) {
         case "+":
-            result = number1 + number2;
-            currentDisplay.textContent = `${result}`;
+            return number1 + number2;
         case "-":
             return number1 - number2;
         case "x":
@@ -40,28 +33,31 @@ function operate() {
 function clearDisplay() {
     storageDisplay.textContent = "";
     currentDisplay.textContent = "0";
+    number1 = "";
+    number2 = "";
+    currentOperation = null;
 }
 
-function storeFirstValue(button) {
-    if(number1 === undefined) {
-        number1 = parseInt(button.target.id);
-    } else {
-        number1 += button.target.id;
-    }
+function setOperation(operator) {
+    if(currentOperation !== null) evaluate();
+    number1 = currentDisplay.textContent;
+    currentOperation = operator;
+    storageDisplay.textContent = `${number1} ${operator}`;
+    shouldResetScreen = true;
 }
 
-function getOperator(button) {
-    operator = button.target.id;
+function evaluate() {
+    if(currentOperation === null || shouldResetScreen) return;
+    number2 = currentDisplay.textContent;
+    currentDisplay.textContent = operate(number1, number2, currentOperation);
+    storageDisplay.textContent = `${number1} ${currentOperation} ${number2} =`
+    currentOperation = null;
 }
 
-function updateStorageDisplay() {
-    storageDisplay.textContent = `${parseInt(number1)} ${operator}`;
-}
-
-function updateCurrentDisplay(button) {
-    if(currentDisplay.textContent === "0") {
-        currentDisplay.textContent = `${button.target.id}`;
-    } else {
-        currentDisplay.textContent += `${button.target.id}`;
-    }
+function appendNumber(number) {
+    if(currentDisplay.textContent === "0" || shouldResetScreen) {
+        currentDisplay.textContent = "";
+        shouldResetScreen = false;
+    } 
+    currentDisplay.textContent += number;
 }
