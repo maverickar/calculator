@@ -28,8 +28,14 @@ function operate(number1, number2, currentOperation) {
         case "x":
             return number1 * number2;
         case "÷":
-            return number1 / number2;
-    } 
+            if(number2 === 0) {
+                return null;
+            } else {
+                return number1 / number2;
+            } 
+        default: 
+            return null;
+    }
 }
 
 function clearDisplay() {
@@ -50,6 +56,10 @@ function setOperation(operator) {
 
 function evaluate() {
     if(currentOperation === null || shouldResetScreen) return;
+    if(currentOperation === "÷" && currentDisplay.textContent === '0') {
+        alert("You can't divide by zero!");
+        return;
+    }
     number2 = currentDisplay.textContent;
     currentDisplay.textContent = operate(number1, number2, currentOperation);
     storageDisplay.textContent = `${number1} ${currentOperation} ${number2} =`
